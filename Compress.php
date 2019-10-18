@@ -1,21 +1,20 @@
 <?php
-
+# UPLOAD YOUR IMAGE
 function UPLOAD($FIELD, $ID, $LOCATION) {
 
     $type = strtolower(strrchr($_FILES[''.$FIELD.'']['name'], '.'));
-    $imgSource = $SYSTEM_VARIABLE['UPLOAD_ROOT_DIR'] . $LOCATION . $ID . $type;
+    $imgSource = __DIR__ . $LOCATION . $ID . $type;
     if (move_uploaded_file($_FILES[''.$FIELD.'']['tmp_name'], $imgSource)) {
-      return $SYSTEM_VARIABLE['HOST_URL'] . $LOCATION . $ID . $type;
-    } else {
-      return false;
+      return $LOCATION . $ID . $type;
     }
-  }
+}
 
-function COMPRESS_SIZE($FIELD, $ID, $LOCATION, $SOURSE_LOCATION, $WIDTH_LIMIT) {
+# COMPRESS YOUR IMAGE
+function COMPRESS($FIELD, $ID, $LOCATION, $SOURSE_LOCATION, $WIDTH_LIMIT) {
 
     $type = strtolower(strrchr($_FILES[''.$FIELD.'']['name'], '.'));
-    $imgSource = $SYSTEM_VARIABLE['UPLOAD_ROOT_DIR'] . $SOURSE_LOCATION . $ID . $type;
-    $imgReader = $SYSTEM_VARIABLE['UPLOAD_ROOT_DIR'] . $LOCATION . $ID . $type;
+    $imgSource = __DIR__ . $SOURSE_LOCATION . $ID . $type;
+    $imgReader = __DIR__ . $LOCATION . $ID . $type;
     list($width, $height, $type_no) = getimagesize($imgSource);
 
     if ($width > $WIDTH_LIMIT) {
@@ -52,5 +51,5 @@ function COMPRESS_SIZE($FIELD, $ID, $LOCATION, $SOURSE_LOCATION, $WIDTH_LIMIT) {
       break;
     }
 
-    return $SYSTEM_VARIABLE['HOST_URL'] . $LOCATION . $ID . $type;
+    return $LOCATION . $ID . $type;
  }
